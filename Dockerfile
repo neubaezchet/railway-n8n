@@ -1,4 +1,4 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:1.122.0
 
 USER root
 
@@ -11,7 +11,7 @@ WORKDIR /home/node
 
 EXPOSE 5678
 
-ENV N8N_HOST=0.0.0.0
-ENV N8N_PORT=5678
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:5678/healthz || exit 1
 
-CMD ["n8n"]
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
