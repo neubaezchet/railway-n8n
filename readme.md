@@ -2,7 +2,8 @@
 
 Sistema de notificaciones automáticas para incapacidades.
 
-## Despliegue en Render
+"Despliegue en Railway"
+
 
 Este proyecto se despliega automáticamente en Render desde el repositorio.
 
