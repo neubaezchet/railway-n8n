@@ -1,0 +1,95 @@
+{
+  "name": "IncaNeurobaeza - DEFINITIVO v2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "incapacidades",
+        "options": {}
+      },
+      "id": "41b3a8cb-4b16-4139-8edf-c27d1d7822ef",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        192
+      ],
+      "webhookId": "incapacidades"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json.body;\n\n// Procesar lista de CCs (vienen separados por comas)\nlet cc_emails = [];\n\nif (data.cc_email && data.cc_email.trim()) {\n  cc_emails = data.cc_email\n    .split(',')\n    .map(e => e.trim())\n    .filter(e => e.includes('@') && e.length > 5);\n}\n\n// Eliminar duplicados (case-insensitive)\nconst uniqueEmails = new Set();\ncc_emails = cc_emails.filter(email => {\n  const lowerEmail = email.toLowerCase();\n  if (uniqueEmails.has(lowerEmail)) {\n    return false;\n  }\n  uniqueEmails.add(lowerEmail);\n  return true;\n});\n\n// Eliminar el TO de los CCs si está incluido\nif (data.email) {\n  const toLower = data.email.toLowerCase();\n  cc_emails = cc_emails.filter(e => e.toLowerCase() !== toLower);\n}\n\nconsole.log('📧 TO:', data.email);\nconsole.log('📧 CCs procesados:', cc_emails);\nconsole.log('📧 Subject:', data.subject);\nconsole.log('📧 Serial:', data.serial);\n\nreturn {\n  json: {\n    email: data.email,\n    subject: data.subject,\n    html_content: data.html_content,\n    cc_emails: cc_emails,\n    serial: data.serial,\n    tipo_notificacion: data.tipo_notificacion\n  }\n};"
+      },
+      "id": "563bd5a3-8c1f-4df6-81ae-2a2ea12280d2",
+      "name": "Procesar CCs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $json.html_content }}",
+        "options": {
+          "ccList": "={{ $json.cc_emails.length > 0 ? $json.cc_emails.join(', ') : '' }}"
+        }
+      },
+      "id": "1418f2f0-19f1-4dec-94cf-4b3d7dab7505",
+      "name": "Gmail Sender",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        64,
+        192
+      ],
+      "webhookId": "1626ebb5-68b9-4e76-81ae-43629dee7cc5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "5ZdNy4AJgIft0tnM",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Procesar CCs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar CCs": {
+      "main": [
+        [
+          {
+            "node": "Gmail Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "01945cb0-001e-4fc0-ab66-216ab12ac08d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8dfeb8ba8a12bb19e713af0c36d0bae756100846d5fdd842f2c3eafc4b3ed455"
+  },
+  "id": "lZD6ZU3PM1QZqKHe",
+  "tags": []
+}

@@ -1,0 +1,73 @@
+services:
+  - type: web
+    name: n8n-incaneurobaeza-2025
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      # Authentication
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: Neurobaeza2025!
+      
+      # Port Configuration
+      - key: PORT
+        value: "5678"
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_LISTEN_ADDRESS
+        value: "0.0.0.0"
+      
+      # Host Configuration
+      - key: N8N_HOST
+        value: n8n-incaneurobaeza-2025.onrender.com
+      - key: N8N_PROTOCOL
+        value: https
+      - key: WEBHOOK_URL
+        value: https://n8n-incaneurobaeza-2025.onrender.com/
+      - key: N8N_EDITOR_BASE_URL
+        value: https://n8n-incaneurobaeza-2025.onrender.com/
+      
+      # Timezone
+      - key: GENERIC_TIMEZONE
+        value: America/Bogota
+      - key: TZ
+        value: America/Bogota
+      
+      # Database
+      - key: DB_TYPE
+        value: sqlite
+      
+      # Execution Settings
+      - key: EXECUTIONS_DATA_SAVE_ON_ERROR
+        value: all
+      - key: EXECUTIONS_DATA_SAVE_ON_SUCCESS
+        value: all
+      - key: EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS
+        value: "true"
+      
+      # Production
+      - key: NODE_ENV
+        value: production
+    
+    disk:
+      name: n8n-data-2025
+      mountPath: /home/node/.n8n
+      sizeGB: 1
+```
+
+**CAMBIO IMPORTANTE:** Nombre nuevo `n8n-incaneurobaeza-2025` para evitar conflictos.
+
+---
+
+### **3. .gitignore**
+```
+.n8n/
+node_modules/
+*.log
+.env
+.DS_Store
