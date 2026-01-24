@@ -109,7 +109,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"number\": \"={{ $json.whatsapp_numbers }}\",\n  \"text\": \"={{ $('Procesar Datos').first().json.whatsapp_text }}\"\n}",
+        "jsonBody": "{\n  \"number\": \"{{ $json }}\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\"\n}",
         "options": {
           "batching": {
             "batch": {
