@@ -109,14 +109,15 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\"\n}",
+        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json.replace(/\\D/g, '') }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\",\n  \"delay\": 1000\n}",
         "options": {
           "batching": {
             "batch": {
               "batchSize": 1,
               "batchInterval": 2000
             }
-          }
+          },
+          "timeout": 30
         }
       },
       "id": "e9140ad3-dd9a-4240-9bac-241ab5d3d542",
