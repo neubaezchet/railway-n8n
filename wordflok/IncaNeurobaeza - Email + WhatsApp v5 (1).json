@@ -104,12 +104,12 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://whatsaap-production.up.railway.app/message/sendText/incapacidades",
+        "url": "https://devlikeaprowaha-production-111a.up.railway.app/api/sendText",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"number\": \"{{ $json }}\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\"\n}",
+        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\"\n}",
         "options": {
           "batching": {
             "batch": {
@@ -120,7 +120,7 @@
         }
       },
       "id": "e9140ad3-dd9a-4240-9bac-241ab5d3d542",
-      "name": "Evolution API - Enviar WhatsApp",
+      "name": "WAHA - Enviar WhatsApp",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
