@@ -219,14 +219,14 @@
       "main": [
         [
           {
-            "node": "Evolution API - Enviar WhatsApp",
+            "node": "WAHA - Enviar WhatsApp",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Evolution API - Enviar WhatsApp": {
+    "WAHA - Enviar WhatsApp": {
       "main": [
         [
           {
