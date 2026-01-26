@@ -117,7 +117,11 @@
               "batchInterval": 2000
             }
           },
-          "timeout": 30
+          "timeout": 30,
+          "headers": {
+            "X-API-Key": "1085043374",
+            "Content-Type": "application/json"
+          }
         }
       },
       "id": "e9140ad3-dd9a-4240-9bac-241ab5d3d542",
