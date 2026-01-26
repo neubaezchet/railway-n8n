@@ -109,7 +109,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json.replace(/\\D/g, '') }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\",\n  \"delay\": 1000\n}",
+        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ String($json).replace(/[^0-9+]/g, '') }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\",\n  \"delay\": 1000\n}",
         "options": {
           "batching": {
             "batch": {
@@ -117,7 +117,11 @@
               "batchInterval": 2000
             }
           },
-          "timeout": 30
+          "timeout": 30,
+          "headers": {
+            "X-API-Key": "1085043374",
+            "Content-Type": "application/json"
+          }
         }
       },
       "id": "e9140ad3-dd9a-4240-9bac-241ab5d3d542",
@@ -131,7 +135,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "jTS0vO9s08ycQzUi",
-          "name": "Header Auth account"
+          "name": "WAHA API Key - 1085043374"
         }
       }
     },
