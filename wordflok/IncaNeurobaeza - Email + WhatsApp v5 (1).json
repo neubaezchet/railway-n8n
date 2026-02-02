@@ -103,39 +103,23 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://devlikeaprowaha-production-111a.up.railway.app/api/sendText",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "{\n  \"session\": \"default\",\n  \"chatId\": \"{{ $json.replace(/\\D/g, '') }}@c.us\",\n  \"text\": \"{{ $('Procesar Datos').first().json.whatsapp_text }}\",\n  \"delay\": 1000\n}",
-        "options": {
-          "batching": {
-            "batch": {
-              "batchSize": 1,
-              "batchInterval": 2000
-            }
-          },
-          "timeout": 30,
-          "headers": {
-            "X-API-Key": "1085043374",
-            "Content-Type": "application/json"
-          }
-        }
+        "session": "default",
+        "chatId": "={{ $json.replace(/\\D/g, '') }}@c.us",
+        "text": "={{ $('Procesar Datos').first().json.whatsapp_text }}",
+        "options": {}
       },
       "id": "e9140ad3-dd9a-4240-9bac-241ab5d3d542",
       "name": "WAHA - Enviar WhatsApp",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@devlikeapro/n8n-nodes-waha.waha",
+      "typeVersion": 1,
       "position": [
         400,
         208
       ],
       "credentials": {
-        "httpHeaderAuth": {
-          "id": "jTS0vO9s08ycQzUi",
-          "name": "Header Auth account"
+        "wahaApi": {
+          "id": "TU_CREDENTIAL_ID",
+          "name": "WAHA Local"
         }
       }
     },
